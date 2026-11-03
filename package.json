@@ -1,0 +1,25 @@
+{
+  "name": "zagreb-bike-navigator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Biciklistička navigacija za Grad Zagreb – OpenStreetMap + otvoreni podaci Grada Zagreba (data.gov.hr)",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c cyan,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
+    "dev:https": "concurrently -k -n server,client -c cyan,magenta \"npm run dev -w server\" \"npm run dev:https -w client\"",
+    "build": "npm run build -w client && npm run typecheck -w server",
+    "start": "npm run start -w server",
+    "test": "npm run test -w server && npm run test -w client",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
