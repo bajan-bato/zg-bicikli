@@ -60,6 +60,24 @@ describe('Statistika rute', () => {
     expect(r.cyclewaySegments.length).toBeGreaterThan(0);
   });
 
+  it('dijelovi po stazi i bez staze zajedno pokrivaju cijelu rutu', () => {
+    const r = s.route(latLon(0, 0), latLon(1000, 0), 'cycleways');
+    const len = (seg: number[][]) =>
+      seg.slice(1).reduce((sum, p, i) => sum + Math.hypot((p[0] - seg[i][0]) * 77_500, (p[1] - seg[i][1]) * 111_195), 0);
+    const cw = r.cyclewaySegments.reduce((a, seg) => a + len(seg), 0);
+    const road = r.roadSegments.reduce((a, seg) => a + len(seg), 0);
+    expect(r.roadSegments.length).toBeGreaterThan(0);
+    expect(cw + road).toBeCloseTo(r.distanceM, -1);
+  });
+
+  it('kratki prekidi staze ne lome prikaz na mrvice', async () => {
+    const { displaySegments } = await import('../src/services/routing/routeBuilder.js');
+    const coords = [at(0, 0), at(1000, 0)];
+    const out = displaySegments(coords, [[0, 400], [402, 800], [900, 902]], 1000);
+    expect(out.cyclewaySegments).toHaveLength(1); // 2 m prekid spojen, 2 m komad zanemaren
+    expect(out.roadSegments).toHaveLength(1);
+  });
+
   it('najkraća ruta bez staza ima udio 0', () => {
     const r = s.route(latLon(0, 0), latLon(1000, 0), 'shortest');
     expect(r.cyclewayDistanceM).toBe(0);

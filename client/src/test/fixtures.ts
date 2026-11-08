@@ -27,6 +27,7 @@ export function testRoute(over: Partial<RouteResult> = {}): RouteResult {
     cyclewayShare: 0.645,
     roadDistanceM: 550,
     cyclewaySegments: [[pt(0), pt(1000)]],
+    roadSegments: [[pt(1000), pt(1550)]],
     instructions: [
       { type: 'depart', modifier: null, text: 'Krenite prema istoku – Savska cesta', streetName: 'Savska cesta', onCycleway: true, distanceM: 500, alongM: 0, location: pt(0) },
       { type: 'turn', modifier: 'left', text: 'Skrenite lijevo – Ilica', streetName: 'Ilica', onCycleway: true, distanceM: 500, alongM: 500, location: pt(500) },

@@ -165,6 +165,8 @@ export interface RouteResult {
   roadDistanceM: number;
   /** Dijelovi rute koji se prostorno poklapaju s biciklističkim stazama. */
   cyclewaySegments: LngLat[][];
+  /** Dijelovi rute bez biciklističke staze (zajedno s cyclewaySegments pokrivaju cijelu rutu). */
+  roadSegments: LngLat[][];
   instructions: Instruction[];
   snappedStart: LngLat;
   snappedEnd: LngLat;

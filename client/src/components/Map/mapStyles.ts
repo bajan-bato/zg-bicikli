@@ -7,7 +7,7 @@ export const COLORS = {
   cyclewayCasing: '#ffffff',
   route: '#6d28d9',
   routeCasing: '#ffffff',
-  routeOnCycleway: '#c4b5fd',
+  routeOnRoad: '#ea580c',
   start: '#16a34a',
   end: '#dc2626',
   user: '#2563eb',
@@ -24,15 +24,17 @@ export function cyclewayStyle(highlighted = false): PathOptions {
   };
 }
 
-export const routeCasingStyle: PathOptions = { color: COLORS.routeCasing, weight: 11, opacity: 0.95, lineCap: 'round', lineJoin: 'round' };
+export const routeCasingStyle: PathOptions = { color: COLORS.routeCasing, weight: 12, opacity: 0.95, lineCap: 'round', lineJoin: 'round' };
+/** Dio rute po biciklističkoj stazi: puna ljubičasta linija. */
 export const routeStyle: PathOptions = { color: COLORS.route, weight: 7, opacity: 1, lineCap: 'round', lineJoin: 'round' };
-/** Dijelovi rute po biciklističkoj stazi: isprekidana svijetla linija unutar ljubičaste rute. */
-export const routeCyclewayStyle: PathOptions = {
-  color: COLORS.routeOnCycleway,
-  weight: 3,
+/** Dio rute bez staze (vožnja cestom): isprekidana narančasta linija. */
+export const routeRoadStyle: PathOptions = {
+  color: COLORS.routeOnRoad,
+  weight: 6,
   opacity: 1,
-  dashArray: '2 8',
-  lineCap: 'round',
+  dashArray: '12 9',
+  lineCap: 'butt',
+  lineJoin: 'round',
 };
 
 const pin = (color: string, letter: string) =>

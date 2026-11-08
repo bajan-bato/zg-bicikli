@@ -187,7 +187,10 @@ export default function App() {
                       <span className="legend-line legend-line--cycleway" /> Biciklističke staze (Grad Zagreb)
                     </li>
                     <li>
-                      <span className="legend-line legend-line--route" /> Izračunata ruta
+                      <span className="legend-line legend-line--route" /> Ruta – biciklističkom stazom
+                    </li>
+                    <li>
+                      <span className="legend-line legend-line--road" /> Ruta – cestom bez staze
                     </li>
                     <li>
                       <span className="legend-parking">P</span> Parkiralište za bicikle

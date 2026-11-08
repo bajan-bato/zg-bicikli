@@ -12,6 +12,8 @@
   --cycleway-soft: #ccfbf1;
   --route: #6d28d9;
   --route-soft: #ede9fe;
+  --road: #ea580c;
+  --road-soft: #ffedd5;
   --start: #16a34a;
   --end: #dc2626;
   --user: #2563eb;
@@ -224,6 +226,19 @@ button:disabled {
 .legend-line--route {
   background: var(--route);
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--border);
+}
+
+.legend-line--road {
+  background: repeating-linear-gradient(90deg, var(--road) 0 7px, transparent 7px 11px);
+  border-radius: 1px;
+}
+
+.stat dt .legend-line {
+  width: 14px;
+  height: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  box-shadow: none;
 }
 
 .legend-parking {
@@ -609,14 +624,14 @@ button:disabled {
   margin: 14px 0 10px;
   height: 8px;
   border-radius: 99px;
-  background: #e2e8f0;
+  background: var(--road-soft);
   overflow: hidden;
 }
 
 .share-bar__fill {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--cycleway), #2dd4bf);
+  background: linear-gradient(90deg, var(--route), #8b5cf6);
   border-radius: inherit;
   transition: width 0.5s var(--ease);
 }
@@ -647,16 +662,16 @@ button:disabled {
 
 .stat dd small {
   font-weight: 500;
-  color: var(--cycleway);
+  color: var(--route);
   margin-left: 4px;
 }
 
 .stat--cycleway {
-  background: var(--cycleway-soft);
+  background: var(--route-soft);
 }
 
 .stat--cycleway dt {
-  color: #115e59;
+  color: #4c1d95;
 }
 
 .link-btn {
@@ -694,7 +709,7 @@ button:disabled {
 }
 
 .steps li.is-cycleway .steps__icon {
-  color: var(--cycleway);
+  color: var(--route);
 }
 
 .steps__icon {

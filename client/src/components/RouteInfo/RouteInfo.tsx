@@ -34,13 +34,17 @@ export function RouteInfo({ route, onNavigate, canNavigate }: Props) {
       </div>
       <dl className="stats">
         <div className="stat stat--cycleway">
-          <dt>Biciklističke staze</dt>
+          <dt>
+            <span className="legend-line legend-line--route" aria-hidden="true" /> Biciklističke staze
+          </dt>
           <dd>
             {formatDistance(route.cyclewayDistanceM)} <small>{formatPercent(route.cyclewayShare)}</small>
           </dd>
         </div>
         <div className="stat">
-          <dt>Obične ceste</dt>
+          <dt>
+            <span className="legend-line legend-line--road" aria-hidden="true" /> Obične ceste
+          </dt>
           <dd>{formatDistance(route.roadDistanceM)}</dd>
         </div>
         <div className="stat">

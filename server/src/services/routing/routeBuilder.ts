@@ -90,10 +90,45 @@ export function buildRoute(
     cyclewayDistanceM: round1(cyclewayDistanceM),
     cyclewayShare: total > 0 ? Math.round((cyclewayDistanceM / total) * 1000) / 1000 : 0,
     roadDistanceM: round1(total - cyclewayDistanceM),
-    cyclewaySegments: coverage.intervals.filter(([a, b]) => b - a >= 3).map(([a, b]) => sliceLine(coords, a, b)),
+    ...displaySegments(coords, coverage.intervals, total),
     instructions: buildInstructions(legs, coords[coords.length - 1], round1(total)),
     averageSpeedKmh,
   };
 }
 
 const round1 = (n: number): number => Math.round(n * 10) / 10;
+
+/** Ispod ove duljine (m) dio rute se ne prikazuje zasebno – izbjegava "mrvice" na karti. */
+const MIN_DISPLAY_M = 5;
+
+/**
+ * Dijeli rutu na dijelove po stazi i bez staze tako da zajedno pokrivaju cijelu
+ * rutu. Vrlo kratki dijelovi pripajaju se susjedima samo za prikaz; statistika
+ * se i dalje računa iz točnih intervala.
+ */
+export function displaySegments(
+  coords: LngLat[],
+  intervals: Array<[number, number]>,
+  total: number,
+): { cyclewaySegments: LngLat[][]; roadSegments: LngLat[][] } {
+  const merged: Array<[number, number]> = [];
+  for (const [a, b] of intervals) {
+    if (b - a < MIN_DISPLAY_M) continue;
+    const last = merged[merged.length - 1];
+    if (last && a - last[1] < MIN_DISPLAY_M) last[1] = b;
+    else merged.push([a, b]);
+  }
+  const roads: Array<[number, number]> = [];
+  let cursor = 0;
+  for (const [a, b] of merged) {
+    if (a - cursor > 0) roads.push([cursor, a]);
+    cursor = b;
+  }
+  if (total - cursor > 0) roads.push([cursor, total]);
+  // Kratki početni/završni dio uz stazu pripada stazi, ne zasebnom komadu ceste.
+  const visibleRoads = roads.filter(([a, b]) => b - a >= MIN_DISPLAY_M || merged.length === 0);
+  return {
+    cyclewaySegments: merged.map(([a, b]) => sliceLine(coords, a, b)),
+    roadSegments: visibleRoads.map(([a, b]) => sliceLine(coords, a, b)),
+  };
+}
